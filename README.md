@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+SohCahToa Holdings — Frontend Assessment
 
-## Getting Started
+A secure transaction monitoring dashboard built with Next.js 15, TypeScript, and modern React patterns.
 
-First, run the development server:
+This project demonstrates authentication, role-based access control, real-time updates, secure API design, and middleware route protection using a production-style frontend architecture.
+## 🚀 Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📋 Test Credentials
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Admin User:**
+- Email: `admin@sohcahtoa.com`
+- Password: `admin123`
 
-## Learn More
+**Analyst User:**
+- Email: `analyst@sohcahtoa.com`
+- Password: `analyst123`
 
-To learn more about Next.js, take a look at the following resources:
+## 🏗️ Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Task 1: Figma UI Conversion
+- **Route:** `/fx-dashboard`
+- Pixel-perfect conversion of provided Figma designs
+- Modern responsive UI components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Task 2: Secure Transaction Dashboard
+- **Route:** `/dashboard` (protected)
+- Full authentication flow with middleware
+- Real-time updates via Server-Sent Events
+- Role-based access control
 
-## Deploy on Vercel
+## 🔐 Security Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **XSS Prevention:** All user input sanitized
+- **CSRF Protection:** SameSite cookies + httpOnly
+- **Token Management:** Secure cookie-based auth
+- **Auto-refresh:** Seamless token renewal
+- **Data Masking:** Sensitive fields protected
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **State:** Redux Toolkit + RTK Query
+- **Auth:** Cookie-based with middleware
+- **Real-time:** Server-Sent Events
+
+## 📁 Key Features
+
+### Authentication
+- Secure login/logout flow
+- Automatic token refresh
+- Middleware route protection
+- Session management
+
+### Dashboard
+- Server-side pagination & filtering
+- Real-time transaction updates
+- Role-based admin actions
+- Optimistic UI updates
+
+### Security
+- XSS attack prevention
+- Sensitive data masking
+- Secure token handling
+- CSRF mitigation
+
+## 🔧 API Routes
+
+- `POST /api/auth/login` - User authentication
+- `POST /api/auth/logout` - Session termination
+- `POST /api/auth/refresh` - Token renewal
+- `GET /api/transactions` - Paginated data
+- `GET /api/transactions/stream` - Real-time updates
+- `POST /api/transactions/flag` - Admin actions
+
+## 🛡️ Middleware Implementation
+
+### Route Protection
+Middleware protects all `/dashboard/*` routes by:
+- Checking for `accessToken` and `refreshToken` cookies
+- Validating token timestamp (60-second expiry simulation)
+- Redirecting unauthenticated users to `/login`
+- Using safe absolute URL redirects
+
+### Middleware Limitations
+**Edge Runtime Constraints:**
+- Cannot use Node.js APIs or most npm packages
+- No database calls or complex crypto operations
+- Limited to basic cookie reading and URL manipulation
+
+**Async Operation Restrictions:**
+- Cannot call refresh token endpoint directly
+- Cannot validate JWT signatures with crypto libraries
+- Complex authentication logic delegated to API routes
+
+**Redirect Safety:**
+- Uses `NextResponse.redirect()` with absolute URLs
+- Prevents redirect loops with pathname checks
+- Handles production vs development differences
+
+**Security Trade-offs:**
+- Provides basic token presence validation
+- Real token validation occurs in API routes
+- Client-side handles token refresh logic
+- Middleware serves as first line of defense
+
+
+
+Built with love for SohCahToa Holdings Assessment 
+Tunde OKEYEMI
+Thank you 
