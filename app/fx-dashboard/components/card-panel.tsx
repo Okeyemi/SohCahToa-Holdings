@@ -1,0 +1,172 @@
+"use client";
+
+import { Plus, ArrowUpRight, ArrowDownLeft, Wallet } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { cardTransactions, CardTransaction } from "./data";
+
+function CardTransactionItem({ tx }: { tx: CardTransaction }) {
+  const isOutgoing = tx.type === "outgoing";
+  const isIncoming = tx.type === "incoming";
+
+  return (
+    <div className="flex items-center gap-3 rounded-lg py-2.5">
+      <div
+        className={cn(
+          "flex size-8 shrink-0 items-center justify-center rounded-full",
+          isIncoming
+            ? "bg-green-500/10"
+            : isOutgoing
+            ? "bg-destructive/10"
+            : "bg-muted"
+        )}
+      >
+        {isOutgoing && (
+          <ArrowUpRight className="size-3.5 text-destructive" />
+        )}
+
+        {isIncoming && (
+          <ArrowDownLeft className="size-3.5 text-green-600" />
+        )}
+
+        {tx.type === "wallet" && (
+          <Wallet className="size-3.5 text-muted-foreground" />
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col">
+        <span className="text-xs font-medium text-foreground">
+          {tx.title}
+        </span>
+        <span className="text-[10px] text-muted-foreground">
+          {tx.date}
+        </span>
+      </div>
+
+      <span
+        className={cn(
+          "text-xs font-semibold",
+          isIncoming ? "text-green-600" : "text-foreground"
+        )}
+      >
+        {isIncoming ? "+" : "-"}${tx.amount.toFixed(2)}
+      </span>
+    </div>
+  );
+}
+
+export function CardsPanel() {
+  return (
+    <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-[340px]">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-semibold text-foreground md:text-base">Cards</h3>
+      </div>
+
+      {/* Card */}
+      <div className="flex items-center gap-3">
+        <div className="relative h-[160px] flex-1 overflow-hidden rounded-2xl bg-gradient-to-br from-[#e85d26] via-[#f0823e] to-[#f7a95c] p-4 shadow-sm">
+          <div className="absolute -right-6 -top-6 size-24 rounded-full bg-white/10" />
+          <div className="absolute -right-2 top-8 size-16 rounded-full bg-white/5" />
+
+          <div className="relative flex h-full flex-col justify-between">
+            <div className="flex items-start justify-between">
+              <span className="text-[10px] text-white/80">
+                Prepaid card
+              </span>
+              <span className="text-xs font-bold tracking-wider text-white">
+                VISA
+              </span>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-1">
+                <span className="text-xs text-white/60">****</span>
+                <span className="text-xs text-white/60">****</span>
+                <span className="text-xs font-medium text-white">7093</span>
+              </div>
+              <span className="text-[10px] text-white/60">09/27</span>
+            </div>
+
+            <div className="flex items-end justify-between">
+              <span className="text-[10px] text-white/80">
+                Emmanuel Israel
+              </span>
+              <span className="text-sm font-bold text-white">
+                $3,048.00
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Card */}
+        <button className="flex size-11 items-center justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground hover:border-primary hover:text-primary">
+          <Plus className="size-5" />
+        </button>
+      </div>
+
+      {/* Card Transactions */}
+      <div className="rounded-2xl border border-border bg-card p-4 md:p-5">
+        <div className="flex items-center justify-between">
+          <h4 className="text-sm font-semibold text-foreground">
+            Card transactions
+          </h4>
+          <button className="text-xs font-medium text-muted-foreground hover:text-foreground">
+            See all
+          </button>
+        </div>
+
+        <div className="mt-3 flex flex-col gap-0.5">
+          {cardTransactions.map((tx) => (
+            <CardTransactionItem key={tx.id} tx={tx} />
+          ))}
+        </div>
+      </div>
+
+      {/* Transaction Flow */}
+      <div className="rounded-2xl border border-border bg-card p-4 md:p-5">
+        <div className="flex items-center justify-between">
+          <h4 className="text-xs font-semibold text-foreground">
+            Card transaction flows
+          </h4>
+          <span className="text-xs font-bold text-primary">
+            +$3,048.00
+          </span>
+        </div>
+
+        <div className="mt-4 flex flex-col gap-4">
+          {/* Money In */}
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-muted-foreground">
+                Money in
+              </span>
+              <span className="text-xs font-semibold text-foreground">
+                $4,046.00
+              </span>
+            </div>
+
+            <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
+              <div className="h-full w-[35%] rounded-full bg-green-500" />
+            </div>
+          </div>
+
+          {/* Money Out */}
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-muted-foreground">
+                Money out
+              </span>
+              <span className="text-xs font-semibold text-foreground">
+                $1,046.00
+              </span>
+            </div>
+
+            <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
+              <div className="h-full w-[80%] rounded-full bg-primary" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}

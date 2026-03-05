@@ -11,4 +11,6 @@ export interface Transaction {
   date: string;
   description: string;
   cardLast4: string;
+  flagged?: boolean;
+  internalNote?: string;
 }

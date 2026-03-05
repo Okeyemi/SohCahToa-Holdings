@@ -1,18 +1,36 @@
-import TransactionsTable from "./TransactionsTable";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import DashboardClient from "./DashboardClient";
+
+async function getInitialTransactions() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  
+  const res = await fetch(
+    `${baseUrl}/api/transactions?page=1&limit=10`,
+    { 
+      cache: "no-store",
+      headers: {
+        Cookie: (await cookies()).toString(),
+      }
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch transactions");
+  }
+
+  return res.json();
+}
 
 export default async function DashboardPage() {
-  const res = await fetch(
-    "http://localhost:3000/api/transactions?page=1&limit=10",
-    { cache: "no-store" } // Important for financial dashboards
-  );
+  const cookieStore = await cookies();
+  const userRole = cookieStore.get("userRole")?.value;
 
-  const data = await res.json();
+  if (!userRole) {
+    redirect("/login");
+  }
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Transactions Dashboard</h1>
+  const initialData = await getInitialTransactions();
 
-      <TransactionsTable initialData={data} />
-    </div>
-  );
+  return <DashboardClient initialData={initialData} userRole={userRole as "admin" | "analyst"} />;
 }
