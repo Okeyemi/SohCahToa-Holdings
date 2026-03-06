@@ -27,6 +27,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (note && (typeof note !== "string" || note.length > 500)) {
+      return NextResponse.json(
+        { error: "Note must be a string with max 500 characters" },
+        { status: 400 }
+      );
+    }
+
     const transaction = transactions.find((t) => t.id === id);
 
     if (!transaction) {

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Transaction } from "@/types/transaction";
 import { useGetTransactionsQuery, useFlagTransactionMutation } from "@/store/api";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { setTransactions } from "@/store/transactionSlice";
+import { setTransactions, updateTransactionOptimistically } from "@/store/transactionSlice";
 import { DashboardSidebar } from "./components/DashboardSidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -44,6 +44,7 @@ export default function DashboardClient({ initialData, userRole }: Props) {
   const dispatch = useAppDispatch();
   const { data: reduxTransactions } = useAppSelector(state => state.transactions);
   
+  const [mounted, setMounted] = useState(false);
   const [page, setPage] = useState(1);
   const [status, setStatus] = useState("");
   const [sortBy, setSortBy] = useState("date");
@@ -87,6 +88,12 @@ export default function DashboardClient({ initialData, userRole }: Props) {
   }, [transactions]);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return; // Wait for hydration to complete
+    
     eventSourceRef.current = new EventSource("/api/transactions/stream");
     
     eventSourceRef.current.onmessage = (event) => {
@@ -110,7 +117,7 @@ export default function DashboardClient({ initialData, userRole }: Props) {
     return () => {
       eventSourceRef.current?.close();
     };
-  }, [dispatch, reduxTransactions, meta]);
+  }, [dispatch, reduxTransactions, meta, mounted]);
 
   const handleFlag = async () => {
     if (!selectedTransaction) return;
@@ -120,16 +127,43 @@ export default function DashboardClient({ initialData, userRole }: Props) {
       return;
     }
 
+    // Store previous state for rollback
+    const previousData = [...transactions];
+    const previousTransaction = { ...selectedTransaction };
+
+    // Optimistic update
+    dispatch(updateTransactionOptimistically({
+      id: selectedTransaction.id,
+      flagged: true,
+      note,
+    }));
+
+    // Update local state immediately
+    setSelectedTransaction({
+      ...selectedTransaction,
+      flagged: true,
+      internalNote: note,
+      status: "flagged",
+    });
+
     try {
       await flagTransaction({ 
         id: selectedTransaction.id, 
         note 
       }).unwrap();
       
+      // Success - close panel
       setSelectedTransaction(null);
       setNote("");
     } catch (err) {
-      alert("Failed to flag transaction");
+      // Rollback on failure
+      dispatch(setTransactions({
+        data: previousData,
+        page: meta.page,
+        total: meta.total,
+      }));
+      setSelectedTransaction(previousTransaction);
+      alert("Failed to flag transaction. Changes have been reverted.");
     }
   };
 

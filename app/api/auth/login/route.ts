@@ -32,6 +32,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 }
+      );
+    }
+
     const user = mockUsers[email as keyof typeof mockUsers];
     if (!user || user.password !== password) {
       return NextResponse.json(

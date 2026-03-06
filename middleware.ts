@@ -21,11 +21,14 @@ export function middleware(request: NextRequest) {
   // For demo: tokens expire after 60 seconds
   const tokenTimestamp = request.cookies.get('tokenTimestamp')?.value;
   if (tokenTimestamp) {
-    const elapsed = Date.now() - parseInt(tokenTimestamp);
-    if (elapsed > 60000) { // 60 seconds
-      // Token expired - let client handle refresh
-      // Middleware cannot make async calls to refresh endpoint
-      return NextResponse.next();
+    const timestamp = parseInt(tokenTimestamp, 10);
+    if (!isNaN(timestamp)) {
+      const elapsed = Date.now() - timestamp;
+      if (elapsed > 60000) { // 60 seconds
+        // Token expired - let client handle refresh
+        // Middleware cannot make async calls to refresh endpoint
+        return NextResponse.next();
+      }
     }
   }
 

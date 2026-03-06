@@ -21,6 +21,21 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    const validSortFields = ["date", "amount", "status", "id"];
+    if (!validSortFields.includes(sort)) {
+      return NextResponse.json(
+        { error: "Invalid sort field. Must be one of: date, amount, status, id" },
+        { status: 400 }
+      );
+    }
+
+    if (order !== "asc" && order !== "desc") {
+      return NextResponse.json(
+        { error: "Invalid order. Must be 'asc' or 'desc'" },
+        { status: 400 }
+      );
+    }
+
     let filtered: Transaction[] = [...transactions];
 
     if (status && !["success", "pending", "failed", "flagged"].includes(status)) {

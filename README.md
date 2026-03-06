@@ -72,6 +72,29 @@ Visit: http://localhost:3000
 - Secure token handling
 - CSRF mitigation
 
+### XSS Mitigation Strategy
+**Test Case:** Transaction ID 6 contains `<script>alert("xss")</script>`
+
+**Protection Mechanism:**
+1. **React's Default Escaping:** React/Next automatically escapes all text content rendered via JSX expressions `{value}`. HTML special characters are converted to entities:
+   - `<` becomes `&lt;`
+   - `>` becomes `&gt;`
+   - `"` becomes `&quot;`
+
+2. **What We Avoid:**
+   -  `dangerouslySetInnerHTML` - bypasses React's protection
+   - Direct DOM manipulation with `innerHTML`
+   - `eval()` or `Function()` constructors
+
+3. **Where XSS Payload Appears:**
+   - Transaction table description column
+   - Transaction detail panel
+   - Both render as plain text: `<script>alert("xss")</script>` (visible but not executed)
+
+4. **Additional Safeguards:**
+   - All API inputs validated and typed
+   - HttpOnly cookies prevent XSS token theft
+
 ## API Routes
 
 - `POST /api/auth/login` - User authentication
@@ -80,6 +103,12 @@ Visit: http://localhost:3000
 - `GET /api/transactions` - Paginated data
 - `GET /api/transactions/stream` - Real-time updates
 - `POST /api/transactions/flag` - Admin actions
+
+## Caching Strategy
+
+**My Choice:** `cache: "no-store"` used it for  all transaction endpoints
+
+
 
 ##  Middleware Implementation
 

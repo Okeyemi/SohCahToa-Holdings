@@ -41,6 +41,14 @@ export async function POST(req: NextRequest) {
       maxAge: 60 * 60 * 24 * 7,
     });
 
+    response.cookies.set("tokenTimestamp", String(Date.now()), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: expiresIn,
+    });
+
     response.cookies.set("tokenExpiry", String(expiresAt), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
