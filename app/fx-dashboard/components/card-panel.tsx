@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Plus, ArrowUpRight, ArrowDownLeft, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { cardTransactions, CardTransaction } from "./data";
@@ -9,7 +10,7 @@ function CardTransactionItem({ tx }: { tx: CardTransaction }) {
   const isIncoming = tx.type === "incoming";
 
   return (
-    <div className="flex items-center gap-3 rounded-lg py-2.5">
+    <div className="flex items-center gap-3 rounded-lg py-2.5 px-1 transition hover:bg-muted/50">
       <div
         className={cn(
           "flex size-8 shrink-0 items-center justify-center rounded-full",
@@ -59,47 +60,29 @@ export function CardsPanel() {
     <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-[340px]">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground md:text-base">Cards</h3>
+        <h3 className="text-sm font-semibold text-foreground md:text-base">
+          Cards
+        </h3>
       </div>
 
-      {/* Card */}
+      {/* Card Section */}
       <div className="flex items-center gap-3">
-        <div className="relative h-[160px] flex-1 overflow-hidden rounded-2xl bg-gradient-to-br from-[#e85d26] via-[#f0823e] to-[#f7a95c] p-4 shadow-sm">
-          <div className="absolute -right-6 -top-6 size-24 rounded-full bg-white/10" />
-          <div className="absolute -right-2 top-8 size-16 rounded-full bg-white/5" />
+        <div className="relative h-[170px] flex-1 overflow-hidden rounded-2xl shadow-sm transition hover:shadow-lg">
+          
+          <Image
+            src="/card.png"
+            alt="Visa card"
+            fill
+            priority
+            className="object-cover"
+          />
 
-          <div className="relative flex h-full flex-col justify-between">
-            <div className="flex items-start justify-between">
-              <span className="text-[10px] text-white/80">
-                Prepaid card
-              </span>
-              <span className="text-xs font-bold tracking-wider text-white">
-                VISA
-              </span>
-            </div>
-
-            <div>
-              <div className="flex items-center gap-1">
-                <span className="text-xs text-white/60">****</span>
-                <span className="text-xs text-white/60">****</span>
-                <span className="text-xs font-medium text-white">7093</span>
-              </div>
-              <span className="text-[10px] text-white/60">09/27</span>
-            </div>
-
-            <div className="flex items-end justify-between">
-              <span className="text-[10px] text-white/80">
-                Emmanuel Israel
-              </span>
-              <span className="text-sm font-bold text-white">
-                $3,048.00
-              </span>
-            </div>
-          </div>
+          {/* subtle overlay ring */}
+          <div className="pointer-events-none absolute inset-0 rounded-2xl  ring-1 ring-black/5 "  />
         </div>
 
         {/* Add Card */}
-        <button className="flex size-11 items-center justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground hover:border-primary hover:text-primary">
+        <button className="flex  items-center h-[170px] size-11 justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition hover:border-primary hover:text-primary">
           <Plus className="size-5" />
         </button>
       </div>
@@ -110,6 +93,7 @@ export function CardsPanel() {
           <h4 className="text-sm font-semibold text-foreground">
             Card transactions
           </h4>
+
           <button className="text-xs font-medium text-muted-foreground hover:text-foreground">
             See all
           </button>
@@ -128,6 +112,7 @@ export function CardsPanel() {
           <h4 className="text-xs font-semibold text-foreground">
             Card transaction flows
           </h4>
+
           <span className="text-xs font-bold text-primary">
             +$3,048.00
           </span>
@@ -140,13 +125,17 @@ export function CardsPanel() {
               <span className="text-[11px] text-muted-foreground">
                 Money in
               </span>
+
               <span className="text-xs font-semibold text-foreground">
                 $4,046.00
               </span>
             </div>
 
             <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
-              <div className="h-full w-[35%] rounded-full bg-green-500" />
+              <div
+                className="h-full rounded-full bg-green-500"
+                style={{ width: "35%" }}
+              />
             </div>
           </div>
 
@@ -156,13 +145,17 @@ export function CardsPanel() {
               <span className="text-[11px] text-muted-foreground">
                 Money out
               </span>
+
               <span className="text-xs font-semibold text-foreground">
                 $1,046.00
               </span>
             </div>
 
             <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
-              <div className="h-full w-[80%] rounded-full bg-primary" />
+              <div
+                className="h-full rounded-full bg-primary"
+                style={{ width: "80%" }}
+              />
             </div>
           </div>
         </div>

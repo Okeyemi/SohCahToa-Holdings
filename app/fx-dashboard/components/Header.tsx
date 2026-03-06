@@ -50,20 +50,14 @@ export function Header() {
                 className="h-10 rounded-full bg-background pl-9"
               />
             </div>
-
-            <button className="flex size-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground">
+             <button className="relative flex size-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground">
               <Bell className="size-4" />
+              <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-semibold text-destructive-foreground">
+                9
+              </span>
             </button>
+          
 
-            <div className="hidden size-9 items-center justify-center rounded-full border border-border bg-card text-xs font-medium text-muted-foreground md:flex">
-              RK
-            </div>
-
-            <Avatar className="size-9 border border-border">
-              <AvatarFallback className="bg-primary text-xs font-semibold text-primary-foreground">
-                EI
-              </AvatarFallback>
-            </Avatar>
           </div>
         </div>
       </header>

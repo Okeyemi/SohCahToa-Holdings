@@ -5,19 +5,44 @@ export async function GET() {
   const stream = new ReadableStream({
     start(controller) {
       const encoder = new TextEncoder();
+      let isActive = true;
 
       const sendEvent = () => {
-        const randomTx =
-          transactions[Math.floor(Math.random() * transactions.length)];
+        if (!isActive) return;
+        
+        try {
+          const randomTx =
+            transactions[Math.floor(Math.random() * transactions.length)];
 
-        const data = `data: ${JSON.stringify(randomTx)}\n\n`;
+          const data = `data: ${JSON.stringify(randomTx)}\n\n`;
 
-        controller.enqueue(encoder.encode(data));
+          if (!controller.desiredSize || controller.desiredSize > 0) {
+            controller.enqueue(encoder.encode(data));
+          }
+        } catch (error) {
+          console.error("SSE send error:", error);
+          cleanup();
+        }
       };
 
       const interval = setInterval(sendEvent, 5000);
 
-      return () => clearInterval(interval);
+      const cleanup = () => {
+        isActive = false;
+        clearInterval(interval);
+        try {
+          if (!controller.desiredSize) {
+            controller.close();
+          }
+        } catch (error) {
+          // Controller already closed
+        }
+      };
+
+      // Handle client disconnect
+      const abortHandler = () => cleanup();
+      
+      return cleanup;
     },
   });
 

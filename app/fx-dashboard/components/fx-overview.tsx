@@ -3,11 +3,12 @@
 import { cn } from "@/lib/utils";
 import {
   ChevronDown,
-  DollarSign,
+  Flag,
   Info,
 } from "lucide-react";
 import { useState } from "react";
 import { fxActionButtons } from "./data";
+import { USFlagIcon } from "./us-flag-icon";
 
 type FxTab = "FX bought" | "FX sold" | "Others";
 
@@ -58,7 +59,7 @@ export function FxOverview() {
         </div>
 
         <button className="flex w-fit items-center gap-1.5 rounded-full bg-black px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm">
-          <DollarSign className="size-3" />
+          <USFlagIcon className="size-3" />
           USD
           <ChevronDown className="size-3.5 opacity-90" />
         </button>
