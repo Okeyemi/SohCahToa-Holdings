@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronDown, Info } from "lucide-react";
+import { ChevronDown, Eye, EyeOff} from "lucide-react";
 import { useState } from "react";
 import { fxActionButtons } from "./data";
 import { USFlagIcon } from "./us-flag-icon";
@@ -33,6 +33,7 @@ function ActionButtonItem({
 
 export function FxOverview() {
   const [activeTab, setActiveTab] = useState<FxTab>("FX bought");
+  const [isVisible, setIsVisible] = useState(true);
 
   return (
     <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
@@ -71,18 +72,32 @@ export function FxOverview() {
           <span className="text-xs text-muted-foreground">
             Total FX units
           </span>
-          <Info className="size-3 text-muted-foreground" />
+          <button
+            onClick={() => setIsVisible(!isVisible)}
+            className="text-foreground hover:text-foreground transition cursor-pointer"
+            aria-label={isVisible ? "Hide amount" : "Show amount"}
+          >
+            {isVisible ? <Eye className="size-3"  /> : <EyeOff className="size-3" />}
+          </button>
         </div>
 
-        <div className="mt-1 flex items-end gap-1">
-          <span className="text-base text-muted-foreground">$</span>
-
-          <span className="text-[34px] font-bold tracking-tight">
-            67,048
-          </span>
-
-          <span className="text-lg font-semibold">.00</span>
-        </div>
+       <div className="mt-1 flex items-baseline gap-1">
+        {isVisible ? (
+          <>
+            <div className="bg-muted/40 rounded-full px-1 ">
+              <span className="text-sm text-muted-foreground">$</span>
+            </div>
+            <span className="text-3xl font-semibold tracking-tight">
+              67,048
+            </span>
+            <span className="text-sm text-muted-foreground">
+              .00
+            </span>
+          </>
+        ) : (
+          <span className="text-3xl font-semibold tracking-tight">••••••</span>
+        )}
+</div>
       </div>
 
       {/* Actions */}

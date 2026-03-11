@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { Plus, ArrowUpRight, ArrowDownLeft, Wallet } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -17,17 +15,13 @@ function CardTransactionItem({ tx }: { tx: CardTransaction }) {
           isIncoming
             ? "bg-green-500/10"
             : isOutgoing
-            ? "bg-destructive/10"
-            : "bg-muted"
+              ? "bg-destructive/10"
+              : "bg-muted",
         )}
       >
-        {isOutgoing && (
-          <ArrowUpRight className="size-3.5 text-destructive" />
-        )}
+        {isOutgoing && <ArrowUpRight className="size-3.5 text-destructive" />}
 
-        {isIncoming && (
-          <ArrowDownLeft className="size-3.5 text-green-600" />
-        )}
+        {isIncoming && <ArrowDownLeft className="size-3.5 text-green-600" />}
 
         {tx.type === "wallet" && (
           <Wallet className="size-3.5 text-muted-foreground" />
@@ -35,18 +29,14 @@ function CardTransactionItem({ tx }: { tx: CardTransaction }) {
       </div>
 
       <div className="flex flex-1 flex-col">
-        <span className="text-xs font-medium text-foreground">
-          {tx.title}
-        </span>
-        <span className="text-[10px] text-muted-foreground">
-          {tx.date}
-        </span>
+        <span className="text-xs font-medium text-foreground">{tx.title}</span>
+        <span className="text-[10px] text-muted-foreground">{tx.date}</span>
       </div>
 
       <span
         className={cn(
           "text-xs font-semibold",
-          isIncoming ? "text-green-600" : "text-foreground"
+          isIncoming ? "text-green-600" : "text-foreground",
         )}
       >
         {isIncoming ? "+" : "-"}${tx.amount.toFixed(2)}
@@ -58,44 +48,41 @@ function CardTransactionItem({ tx }: { tx: CardTransaction }) {
 export function CardsPanel() {
   return (
     <div className="rounded-2xl border border-border bg-card p-3">
-      <aside className="flex w-full shrink-0 flex-col gap-6">
+      <aside className="flex w-full shrink-0 flex-col gap-3">
         {/* Card Section */}
-        <div className="rounded-2xl border border-border bg-background p-4">
-      
+        <div className="rounded-2xl border border-border bg-background p-2">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-foreground md:text-base">
-              Cards
-            </h3>
+            <h3 className="text-sm  text-foreground md:text-base">Cards</h3>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1 overflow-hidden  transition hover:shadow-sm h-[156px] rounded-2xl">
-              
+          <div className="flex items-stretch h-35">
+            {/* Visa Card */}
+            <div className="relative flex-1 rounded-2xl transition ">
               <Image
                 src="/card.png"
-                alt="Visa card"
+                alt="Visa debit card"
                 fill
+                className="object-cover w-full h-full"
                 priority
-                className="object-cover"
               />
             </div>
-          
-            <button 
+
+            {/* Add Card Button */}
+            <button
               type="button"
               aria-label="Add new card"
-              className="flex  items-center h-[156px] size-11 justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition hover:border-primary hover:text-primary"
+              className="flex shrink-0 w-11 h-30 cursor-pointer   items-center justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition hover:border-primary hover:text-primary"
             >
               <Plus className="size-5" />
             </button>
+
           </div>
         </div>
 
         {/* Card Transactions */}
         <div className="rounded-2xl border border-border bg-background p-5">
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-semibold text-foreground">
-              Card transactions
-            </h4>
+            <h4 className="text-sm  text-foreground">Card transactions</h4>
 
             <button className="text-xs font-medium text-muted-foreground hover:text-foreground">
               See all
@@ -116,9 +103,7 @@ export function CardsPanel() {
               Card transaction flows
             </h4>
 
-            <span className="text-xs font-bold text-primary">
-              +$3,048.00
-            </span>
+            <span className="text-xs font-bold text-primary">+$3,048.00</span>
           </div>
 
           <div className="mt-4 flex flex-col gap-4">
