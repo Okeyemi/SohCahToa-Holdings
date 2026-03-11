@@ -70,6 +70,7 @@ export async function GET(req: NextRequest) {
       const aValue = a[sort as keyof Transaction];
       const bValue = b[sort as keyof Transaction];
 
+      if (!aValue || !bValue) return 0;
       if (aValue < bValue) return order === "asc" ? -1 : 1;
       if (aValue > bValue) return order === "asc" ? 1 : -1;
       return 0;
