@@ -1,12 +1,12 @@
 import {
-  ArrowDownToLine,
   ArrowLeftRight,
-  ArrowUpFromLine,
   Calculator,
+  ClipboardMinus,
+  ClipboardPlus,
+  CircleCheckBig,
   CreditCard,
   Home,
   LayoutGrid,
-  Wallet,
 } from "lucide-react";
 
 export const sidebarNavItems = [
@@ -18,9 +18,9 @@ export const sidebarNavItems = [
 ];
 
 export const fxActionButtons = [
-  { icon: ArrowDownToLine, label: "Buy FX" },
-  { icon: ArrowUpFromLine, label: "Sell FX" },
-  { icon: Wallet, label: "Receive" },
+  { icon: ClipboardMinus, label: "Buy FX" },
+  { icon: ClipboardPlus, label: "Sell FX" },
+  { icon: CircleCheckBig, label: "Receive" },
 ];
 
 export type FilterType = "All" | "FX" | "PTA" | "BTA" | "Medicals";

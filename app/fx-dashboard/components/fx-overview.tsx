@@ -18,13 +18,13 @@ function ActionButtonItem({
   label: string;
 }) {
   return (
-    <button className="flex flex-1 flex-col items-center gap-1.5 rounded-xl border border-border bg-background py-3 transition hover:bg-muted/60">
+    <button className="flex flex-1 flex-col items-center gap-1.5 rounded-xl border border-border bg-card py-2 sm:py-3 transition hover:bg-muted/60 min-w-0 ">
       
-      <div className="flex size-9 items-center justify-center rounded-lg border border-border bg-card">
-        <Icon className="size-[17px]" />
+      <div className="flex size-8 sm:size-9 items-center justify-center rounded-lg bg-card">
+        <Icon className="size-4 sm:size-[17px]" />
       </div>
 
-      <span className="text-[11px] font-medium text-muted-foreground">
+      <span className="text-[10px] sm:text-[11px] font-medium text-muted-foreground truncate px-1">
         {label}
       </span>
     </button>
@@ -101,7 +101,7 @@ export function FxOverview() {
       </div>
 
       {/* Actions */}
-      <div className="mt-5 grid grid-cols-3 gap-3">
+      <div className="mt-5 grid md:grid-cols-5 grid-cols-3 gap-1 sm:gap-2">
         {fxActionButtons.map((action) => (
           <ActionButtonItem key={action.label} {...action} />
         ))}
