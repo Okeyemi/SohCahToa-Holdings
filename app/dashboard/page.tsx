@@ -3,23 +3,28 @@ import { redirect } from "next/navigation";
 import DashboardClient from "./DashboardClient";
 
 async function getInitialTransactions() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  
-  const res = await fetch(
-    `${baseUrl}/api/transactions?page=1&limit=10`,
-    { 
-      cache: "no-store",
-      headers: {
-        Cookie: (await cookies()).toString(),
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    
+    const res = await fetch(
+      `${baseUrl}/api/transactions?page=1&limit=10`,
+      { 
+        cache: "no-store",
+        headers: {
+          Cookie: (await cookies()).toString(),
+        }
       }
+    );
+
+    if (!res.ok) {
+      return { data: [], meta: { total: 0, page: 1, limit: 10, totalPages: 0 } };
     }
-  );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch transactions");
+    return res.json();
+  } catch (error) {
+    console.error("Failed to fetch initial transactions:", error);
+    return { data: [], meta: { total: 0, page: 1, limit: 10, totalPages: 0 } };
   }
-
-  return res.json();
 }
 
 export default async function DashboardPage() {
