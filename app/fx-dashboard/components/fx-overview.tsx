@@ -37,7 +37,6 @@ export function FxOverview() {
   return (
     <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
       
-      {/* Tabs + Currency */}
       <div className="flex items-center justify-between">
 
         {/* Tabs */}

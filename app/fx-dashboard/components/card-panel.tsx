@@ -57,39 +57,37 @@ function CardTransactionItem({ tx }: { tx: CardTransaction }) {
 
 export function CardsPanel() {
   return (
-    <div className="rounded-2xl border border-border bg-card p-6">
+    <div className="rounded-2xl border border-border bg-card p-3">
       <aside className="flex w-full shrink-0 flex-col gap-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold text-foreground md:text-base">
-            Cards
-          </h3>
-        </div>
-
         {/* Card Section */}
-        <div className="flex items-center gap-3">
-          <div className="relative h-[170px] flex-1 overflow-hidden rounded-2xl shadow-sm transition hover:shadow-lg">
-            
-            <Image
-              src="/card.png"
-              alt="Visa card"
-              fill
-              priority
-              className="object-cover"
-            />
-
-            {/* subtle overlay ring */}
-            <div className="pointer-events-none absolute inset-0 rounded-2xl  ring-1 ring-black/5 "  />
+        <div className="rounded-2xl border border-border bg-background p-4">
+      
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-semibold text-foreground md:text-base">
+              Cards
+            </h3>
           </div>
 
-        
-          <button 
-            type="button"
-            aria-label="Add new card"
-            className="flex  items-center h-[170px] size-11 justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition hover:border-primary hover:text-primary"
-          >
-            <Plus className="size-5" />
-          </button>
+          <div className="flex items-center gap-3">
+            <div className="relative flex-1 overflow-hidden  transition hover:shadow-sm h-[156px] rounded-2xl">
+              
+              <Image
+                src="/card.png"
+                alt="Visa card"
+                fill
+                priority
+                className="object-cover"
+              />
+            </div>
+          
+            <button 
+              type="button"
+              aria-label="Add new card"
+              className="flex  items-center h-[156px] size-11 justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition hover:border-primary hover:text-primary"
+            >
+              <Plus className="size-5" />
+            </button>
+          </div>
         </div>
 
         {/* Card Transactions */}
