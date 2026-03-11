@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import { ArrowUpRight, ArrowDownLeft } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useAppSelector } from "@/store/hooks";
 import { filterTabs, FilterType, fxTransactions, FxTransaction } from "./data";
 
 function TransactionItem({ tx }: { tx: FxTransaction }) {
@@ -50,7 +49,6 @@ function TransactionItem({ tx }: { tx: FxTransaction }) {
 
 export function FxTransactions() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("All");
-  const transactionCount = useAppSelector(state => state.transactions.total);
   
   const filteredTransactions = useMemo(() => {
     if (activeFilter === "All") return fxTransactions;
@@ -62,7 +60,7 @@ export function FxTransactions() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-foreground md:text-base">
-          FX Transactions ({transactionCount} total)
+          FX Transactions
         </h3>
 
         <button className="text-xs font-medium text-muted-foreground hover:text-foreground">

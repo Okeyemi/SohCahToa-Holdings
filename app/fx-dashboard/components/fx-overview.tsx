@@ -1,11 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import {
-  ChevronDown,
-  Flag,
-  Info,
-} from "lucide-react";
+import { ChevronDown, Info } from "lucide-react";
 import { useState } from "react";
 import { fxActionButtons } from "./data";
 import { USFlagIcon } from "./us-flag-icon";
@@ -22,12 +18,13 @@ function ActionButtonItem({
   label: string;
 }) {
   return (
-    <button className="flex min-w-0 flex-1 flex-col items-center gap-2 rounded-xl border border-border/80 bg-background px-2 py-3 transition-colors hover:bg-muted/80">
-      <div className="flex size-10 items-center justify-center rounded-lg border border-border bg-card transition-colors">
-        <Icon className="size-[18px] text-foreground" />
+    <button className="flex flex-1 flex-col items-center gap-1.5 rounded-xl border border-border bg-background py-3 transition hover:bg-muted/60">
+      
+      <div className="flex size-9 items-center justify-center rounded-lg border border-border bg-card">
+        <Icon className="size-[17px]" />
       </div>
 
-      <span className="text-[11px] font-medium text-muted-foreground md:text-xs">
+      <span className="text-[11px] font-medium text-muted-foreground">
         {label}
       </span>
     </button>
@@ -38,18 +35,21 @@ export function FxOverview() {
   const [activeTab, setActiveTab] = useState<FxTab>("FX bought");
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6">
+    <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      
       {/* Tabs + Currency */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-1">
+      <div className="flex items-center justify-between">
+
+        {/* Tabs */}
+        <div className="flex items-center gap-1">
           {fxTabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={cn(
-                "rounded-full px-3 py-1.5 text-xs font-medium transition-colors",
+                "rounded-full px-3 py-1 text-xs font-medium transition",
                 activeTab === tab
-                  ? "bg-primary/10 text-primary shadow-sm"
+                  ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -58,35 +58,36 @@ export function FxOverview() {
           ))}
         </div>
 
-        <button className="flex w-fit items-center gap-1.5 rounded-full bg-black px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm">
+        {/* Currency */}
+        <button className="flex items-center gap-1.5 rounded-full bg-black px-3 py-1 text-xs font-semibold text-white">
           <USFlagIcon className="size-3" />
           USD
-          <ChevronDown className="size-3.5 opacity-90" />
+          <ChevronDown className="size-3.5 opacity-80" />
         </button>
       </div>
 
       {/* Balance */}
-      <div className="mt-6">
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs font-medium text-muted-foreground">
-            Total FX balance
+      <div className="mt-5">
+        <div className="flex items-center gap-1">
+          <span className="text-xs text-muted-foreground">
+            Total FX units
           </span>
           <Info className="size-3 text-muted-foreground" />
         </div>
 
-        <div className="mt-1.5 flex items-baseline gap-1.5">
-          <span className="text-base font-medium text-muted-foreground">$</span>
+        <div className="mt-1 flex items-end gap-1">
+          <span className="text-base text-muted-foreground">$</span>
 
-          <span className="text-3xl font-extrabold tracking-tight text-foreground md:text-4xl">
+          <span className="text-[34px] font-bold tracking-tight">
             67,048
           </span>
 
-          <span className="text-lg font-bold text-foreground">.00</span>
+          <span className="text-lg font-semibold">.00</span>
         </div>
       </div>
 
       {/* Actions */}
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="mt-5 grid grid-cols-3 gap-3">
         {fxActionButtons.map((action) => (
           <ActionButtonItem key={action.label} {...action} />
         ))}

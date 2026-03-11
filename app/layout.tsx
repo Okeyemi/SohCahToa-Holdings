@@ -1,6 +1,9 @@
 import "./globals.css";
 import { Providers } from "@/store/provider";
+import { Inter, Geist_Mono } from 'next/font/google'
 import type { Metadata } from "next";
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
   title: "SohCahToa-Holdings",
@@ -20,7 +23,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.jpeg" type="image/jpeg" />
       </head>
-      <body className="min-h-screen bg-background font-sans antialiased">
+      <body className={`${inter.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

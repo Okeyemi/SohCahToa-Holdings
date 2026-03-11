@@ -57,109 +57,115 @@ function CardTransactionItem({ tx }: { tx: CardTransaction }) {
 
 export function CardsPanel() {
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-5 lg:w-[340px]">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-foreground md:text-base">
-          Cards
-        </h3>
-      </div>
-
-      {/* Card Section */}
-      <div className="flex items-center gap-3">
-        <div className="relative h-[170px] flex-1 overflow-hidden rounded-2xl shadow-sm transition hover:shadow-lg">
-          
-          <Image
-            src="/card.png"
-            alt="Visa card"
-            fill
-            priority
-            className="object-cover"
-          />
-
-          {/* subtle overlay ring */}
-          <div className="pointer-events-none absolute inset-0 rounded-2xl  ring-1 ring-black/5 "  />
+    <div className="rounded-2xl border border-border bg-card p-6">
+      <aside className="flex w-full shrink-0 flex-col gap-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold text-foreground md:text-base">
+            Cards
+          </h3>
         </div>
 
-        {/* Add Card */}
-        <button className="flex  items-center h-[170px] size-11 justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition hover:border-primary hover:text-primary">
-          <Plus className="size-5" />
-        </button>
-      </div>
+        {/* Card Section */}
+        <div className="flex items-center gap-3">
+          <div className="relative h-[170px] flex-1 overflow-hidden rounded-2xl shadow-sm transition hover:shadow-lg">
+            
+            <Image
+              src="/card.png"
+              alt="Visa card"
+              fill
+              priority
+              className="object-cover"
+            />
 
-      {/* Card Transactions */}
-      <div className="rounded-2xl border border-border bg-card p-4 md:p-5">
-        <div className="flex items-center justify-between">
-          <h4 className="text-sm font-semibold text-foreground">
-            Card transactions
-          </h4>
+            {/* subtle overlay ring */}
+            <div className="pointer-events-none absolute inset-0 rounded-2xl  ring-1 ring-black/5 "  />
+          </div>
 
-          <button className="text-xs font-medium text-muted-foreground hover:text-foreground">
-            See all
+        
+          <button 
+            type="button"
+            aria-label="Add new card"
+            className="flex  items-center h-[170px] size-11 justify-center rounded-xl border-2 border-dashed border-border text-muted-foreground transition hover:border-primary hover:text-primary"
+          >
+            <Plus className="size-5" />
           </button>
         </div>
 
-        <div className="mt-3 flex flex-col gap-0.5">
-          {cardTransactions.map((tx) => (
-            <CardTransactionItem key={tx.id} tx={tx} />
-          ))}
-        </div>
-      </div>
+        {/* Card Transactions */}
+        <div className="rounded-2xl border border-border bg-background p-5">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-semibold text-foreground">
+              Card transactions
+            </h4>
 
-      {/* Transaction Flow */}
-      <div className="rounded-2xl border border-border bg-card p-4 md:p-5">
-        <div className="flex items-center justify-between">
-          <h4 className="text-xs font-semibold text-foreground">
-            Card transaction flows
-          </h4>
-
-          <span className="text-xs font-bold text-primary">
-            +$3,048.00
-          </span>
-        </div>
-
-        <div className="mt-4 flex flex-col gap-4">
-          {/* Money In */}
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] text-muted-foreground">
-                Money in
-              </span>
-
-              <span className="text-xs font-semibold text-foreground">
-                $4,046.00
-              </span>
-            </div>
-
-            <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
-              <div
-                className="h-full rounded-full bg-green-500"
-                style={{ width: "35%" }}
-              />
-            </div>
+            <button className="text-xs font-medium text-muted-foreground hover:text-foreground">
+              See all
+            </button>
           </div>
 
-          {/* Money Out */}
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] text-muted-foreground">
-                Money out
-              </span>
+          <div className="mt-3 flex flex-col gap-0.5">
+            {cardTransactions.map((tx) => (
+              <CardTransactionItem key={tx.id} tx={tx} />
+            ))}
+          </div>
+        </div>
 
-              <span className="text-xs font-semibold text-foreground">
-                $1,046.00
-              </span>
+        {/* Transaction Flow */}
+        <div className="rounded-2xl border border-border bg-background p-5">
+          <div className="flex items-center justify-between">
+            <h4 className="text-xs font-semibold text-foreground">
+              Card transaction flows
+            </h4>
+
+            <span className="text-xs font-bold text-primary">
+              +$3,048.00
+            </span>
+          </div>
+
+          <div className="mt-4 flex flex-col gap-4">
+            {/* Money In */}
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] text-muted-foreground">
+                  Money in
+                </span>
+
+                <span className="text-xs font-semibold text-foreground">
+                  $4,046.00
+                </span>
+              </div>
+
+              <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-green-500"
+                  style={{ width: "35%" }}
+                />
+              </div>
             </div>
 
-            <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
-              <div
-                className="h-full rounded-full bg-primary"
-                style={{ width: "80%" }}
-              />
+            {/* Money Out */}
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] text-muted-foreground">
+                  Money out
+                </span>
+
+                <span className="text-xs font-semibold text-foreground">
+                  $1,046.00
+                </span>
+              </div>
+
+              <div className="mt-2 h-2.5 w-full rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-primary"
+                  style={{ width: "80%" }}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   );
 }

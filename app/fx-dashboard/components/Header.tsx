@@ -13,16 +13,23 @@ export function Header() {
   return (
     <>
       <header className="border-b border-border/80 bg-card/60 px-4 py-4 backdrop-blur md:px-6">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between">
+          {/* Mobile: Menu + Title */}
+          <div className="flex items-center gap-3 md:hidden">
             <button
               onClick={() => setMobileNavOpen(true)}
-              className="flex size-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground md:hidden"
+              className="flex size-10 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted"
               aria-label="Open navigation"
             >
-              <Menu className="size-4" />
+              <Menu className="size-5" />
             </button>
+            <h1 className="text-base font-semibold text-foreground">
+              Dashboard
+            </h1>
+          </div>
 
+          {/* Desktop: Avatar + Greeting */}
+          <div className="hidden md:flex items-center gap-3">
             <Avatar className="size-10 border-2 border-primary/20">
               <AvatarFallback className="bg-primary/10 text-sm font-semibold text-primary">
                 <Image
@@ -42,22 +49,24 @@ export function Header() {
             </div>
           </div>
 
+          {/* Right Side Actions */}
           <div className="flex items-center gap-2 md:gap-3">
-            <div className="relative flex-1 md:w-64 md:flex-none">
+            {/* Desktop Search */}
+            <div className="relative hidden md:block md:w-64">
               <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search"
                 className="h-10 rounded-full bg-background pl-9"
               />
             </div>
-             <button className="relative flex size-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground">
+            
+            {/* Notification Bell */}
+            <button className="relative flex size-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground hover:bg-muted">
               <Bell className="size-4" />
               <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-semibold text-destructive-foreground">
                 9
               </span>
             </button>
-          
-
           </div>
         </div>
       </header>
@@ -86,6 +95,7 @@ export function Header() {
               {sidebarNavItems.map((item) => (
                 <button
                   key={item.label}
+                  onClick={() => setMobileNavOpen(false)}
                   className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                     item.active
                       ? "bg-sidebar-accent text-primary"

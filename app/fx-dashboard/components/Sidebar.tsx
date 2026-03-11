@@ -80,26 +80,27 @@ export function Sidebar() {
         <div className="flex items-center gap-3 rounded-xl px-3 py-2.5">
           <Avatar className="size-8">
             <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
-              EI
+              <Image
+                src="/avatar.png"
+                alt="User Avatar"
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
             </AvatarFallback>
           </Avatar>
-
           {!collapsed && (
-            <>
-              <div className="flex flex-1 flex-col">
-                <span className="text-xs font-semibold text-foreground">
-                  Emmanuel Israel
-                </span>
-                <span className="truncate text-[10px] text-muted-foreground">
-                  emmanuel.e.isra...
-                </span>
-              </div>
-
-              <ChevronDown className="size-4 text-muted-foreground" />
-            </>
+            <div className="flex flex-col">
+              <span className="text-xs font-semibold text-foreground">
+                Emmanuel Israel
+              </span>
+              <span className="truncate text-[10px] text-muted-foreground">
+                emmanuel.e.isra...
+              </span>
+            </div>
           )}
         </div>
-      </div>
+      </div>  
     </aside>
   );
 }
